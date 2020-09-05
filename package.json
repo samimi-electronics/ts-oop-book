@@ -1,0 +1,30 @@
+{
+  "name": "tsExpressTest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "tsc && node ./build/server.js",
+    "start:dev": "nodemon ./src/server.ts",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.1",
+    "shortid": "^2.2.15"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.7",
+    "@types/express": "^4.17.8",
+    "@types/mongodb": "^3.5.27",
+    "@types/node": "^14.6.3",
+    "@types/shortid": "0.0.29",
+    "nodemon": "^2.0.4",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.2"
+  }
+}
