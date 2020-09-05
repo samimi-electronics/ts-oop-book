@@ -1,5 +1,5 @@
 import { dbclient } from './services/db.service';
-import { BookService } from './services/book.service';
+import BookService from './services/book.service';
 import express, { Request, Response } from 'express'
 import cors from 'cors'
 import IBook from './interfaces/book.interface';

@@ -5,7 +5,7 @@ import IBook from '../interfaces/book.interface';
 
 shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@')
 
-export class BookService {
+export default class BookService {
   private book: BookModel = new BookModel()
   private db = dbclient.db('book_db')
   private collection = this.db.collection('books')
