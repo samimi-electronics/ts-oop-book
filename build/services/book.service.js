@@ -39,37 +39,56 @@ shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWX
 class BookService {
     constructor() {
         this.book = new book_model_1.default();
+        this.db = db_service_1.dbclient.db('book_db');
+        this.collection = this.db.collection('books');
     }
     create(book) {
         return __awaiter(this, void 0, void 0, function* () {
             this.book.setName(book.name);
             this.book.setAuthor(book.author);
             try {
-                const db = db_service_1.dbclient.db('book_db');
-                const collection = db.collection('books');
                 const doc = { _id: shortid.generate(), name: this.book.getName(), author: this.book.getAuthor() };
-                return (yield collection.insertOne(doc)).ops[0];
+                return (yield this.collection.insertOne(doc)).ops[0];
             }
             catch (err) {
-                console.log(err);
+                return err;
             }
         });
     }
-    getOneByID(_id) {
+    getOneByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
+            const query = { _id: id };
             try {
-                const db = db_service_1.dbclient.db('book_db');
-                const collection = db.collection('books');
-                return yield collection.findOne({ _id });
+                return yield this.collection.findOne(query);
             }
             catch (err) {
-                console.log(err);
+                return err;
             }
         });
     }
     getAll() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const books = [];
+            try {
+                const cursor = this.collection.find({});
+                yield cursor.forEach(book => books.push(book));
+                return books;
+            }
+            catch (err) {
+                return err;
+            }
+        });
     }
-    delete() {
+    deleteByID(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const query = { _id: id };
+            try {
+                return this.collection.deleteOne(query);
+            }
+            catch (err) {
+                return err;
+            }
+        });
     }
 }
 exports.BookService = BookService;

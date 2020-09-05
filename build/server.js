@@ -23,12 +23,34 @@ app.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const bookID = req.params.id;
     const bookService = new book_service_1.BookService();
     try {
-        const book = bookService.getOneByID(bookID);
-        res.json({ status: 200, book });
+        const _book = yield bookService.getOneByID(bookID);
+        res.json({ status: 200, book: _book });
     }
     catch (err) {
         console.log(err);
         res.status(400).json({ status: 400, message: 'No book found' });
+    }
+}));
+app.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const bookID = req.params.id;
+    const bookService = new book_service_1.BookService();
+    try {
+        yield bookService.deleteByID(bookID);
+        res.json({ status: 200, message: 'Book Deleted' });
+    }
+    catch (err) {
+        res.status(400).json({ status: 400, message: 'Book not found' });
+    }
+}));
+app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const bookService = new book_service_1.BookService();
+    try {
+        const books = yield bookService.getAll();
+        res.json({ status: 200, books });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(400).json({ status: 500, message: 'Error finding books' });
     }
 }));
 app.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -36,7 +58,7 @@ app.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const bookService = new book_service_1.BookService();
     try {
         const createdBook = yield bookService.create(bookInformation);
-        res.json({ status: 201, userID: createdBook._id });
+        res.status(201).json({ status: 201, userID: createdBook._id });
     }
     catch (err) {
         res.status(400).json({ status: 400, message: 'User not created' });
